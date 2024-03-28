@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>demo</title>
+  <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+  <script src="https://unpkg.com/styled-components/dist/styled-components.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+
+<script type="text/babel">
+  const { styled } = window;
+  const { ThemeProvider } = styled;
+  const Title = styled.div`
+    color: ${props => props.theme.titleColor};
+    font-size: 12px;
+  `;
+  const TextGrey8 = styled.div`
+    color: ${props => props.theme.textColor};
+    font-size: 8px;
+  `;
+  const TextNormal8 = styled(TextGrey8)`
+    color: ${props => props.theme.textNormalColor};
+  `;
+  const TextGrey6 = styled(TextGrey8)`
+    font-size: 6px;
+  `;
+  const TextGrey7 = styled(TextGrey8)`
+    font-size: 7px;
+  `;
+  const TextGrey10 = styled(TextGrey8)`
+    font-size: 10px;
+  `;
+  const UserName = styled(TextGrey8)`
+    flex: 1;
+    margin-left: 4px;
+  `;
+
+  const DepositContainer = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: ${props => props.theme.backgroundColor};
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 260px;
+  `;
+  const Header = styled.div`
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  `;
+  const CloseButton = styled.div`
+    background: ${props => props.theme.cancelButtonBackground};
+    color: ${props => props.theme.cancelButtonColor};
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    cursor: pointer;
+  `;
+  const TransferBetween = styled.div`
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+  `;
+  const From = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+  `;
+  const ToIcon = styled.img`
+    position: relative;
+    top: 26px;
+    right: 5px;
+    width: 8px;
+    height: 8px;
+  `;
+  const To = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+  `;
+
+  const Input = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+    background-color: ${props => props.theme.boxColor};
+    border-radius: 3px;
+    padding: 8px;
+    width: 80%;
+  `;
+  const UserIcon = styled.img`
+    width: 12px;
+    height: 12px;
+  `;
+  const UserIconAmount = styled(UserIcon)`
+    padding-right: 8px;
+  `;
+  const EditIcon = styled.img`
+    margin-left: 4px;
+    width: 6px;
+    height: 6px;
+  `;
+  const Amount = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+  `;
+  const Label = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  `;
+  const AmountInput = styled.div`
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+    border: 0.5px solid ${props => props.theme.textColor};
+    padding: 8px;
+    ::after {
+      content: '';
+      position: absolute;
+      width: 0.5px;
+      height: 28px;
+      background-color: ${props => props.theme.textColor};
+      left: 28px;
+      bottom: 0px;
+    }
+  `;
+  const AmountSelect = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  `;
+  const Option = styled.div`
+    background-color: ${props => props.theme.optionBackground};
+    color: ${props => props.theme.textColor};
+    padding: 2px 4px;
+    border-radius: 3px;
+    margin-left: 4px;
+    font-size: 8px;
+    font-weight: 600;
+  `;
+  const EstimatedTime = styled.div`
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    background-color: ${props => props.theme.boxColor};
+    border-radius: 3px;
+    padding: 4px;
+    width: 100%;
+  `;
+  const ClockIcon = styled.img`
+    width: 12px;
+    height: 12px;
+  `;
+  const TransferButton = styled.button`
+    margin-top: 10px;
+    padding: 4px;
+    background-color: ${props => props.theme.transferButtonBackground};
+    border: 1px solid ${props => props.theme.transferButtonBackground};
+    border-radius: 5px;
+    color: ${props => props.theme.transferButtonColor};
+    text-align: center;
+    width: 100%;
+    line-height: 26px;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+  `;
+  const CancelButton = styled(TransferButton)`
+    background-color: transparent;
+    border: none;
+    color: ${props => props.theme.textColor};
+    margin-top: 10px;
+  `;
+
+  const theme = {
+    lightMode: {
+      backgroundColor: '#FFFFFF',
+      cancelButtonColor: '#2C3139',
+      cancelButtonBackground: '#F7FAFC',
+      titleColor: '#2B3138',
+      boxColor: '#EDF2F9',
+      textColor: '#637181',
+      textNormalColor: "#000000",
+      optionBackground: '#EDF2F9',
+      transferButtonColor: '#FFFFFF',
+      transferButtonBackground: '#2B3138'
+    },
+    darkMode: {
+      backgroundColor: '#202428',
+      cancelButtonColor: '#E5EAF1',
+      cancelButtonBackground: '#2B3139',
+      titleColor: '#EDF2F9',
+      boxColor: '#141317',
+      textColor: '#637181',
+      textNormalColor: "#FFFFFF",
+      optionBackground: '#2B3138',
+      transferButtonColor: '#000000',
+      transferButtonBackground: '#EDF2F9'
+    }
+  };
+
+  function DepositComponent() {
+    const amountOption = ['Max', '1/2', '1/3'];
+    const [ mode, setMode ] = React.useState('lightMode');
+    const handleThemeChange = (e) => {
+      setMode(e.target.checked ? 'darkMode' : 'lightMode');
+    };
+    return (
+      <ThemeProvider theme={theme[mode]}>
+        <label>
+          Dark Mode:
+          <input type="checkbox" onChange={handleThemeChange} />
+        </label>
+        <DepositContainer>
+          <Header>
+            <Title>Deposit ATOM</Title>
+            <CloseButton>X</CloseButton>
+          </Header>
+          <TransferBetween>
+            <From>
+              <TextGrey8>From Cosmos Hub</TextGrey8>
+              <Input>
+                <UserIcon src="/assets/icon-left.svg" />
+                <UserName>fhihfeerfeiriuerf</UserName>
+              </Input>
+            </From>
+            <ToIcon src="/assets/right-arrow.svg" />
+            <To>
+              <TextGrey8>To Osmosis</TextGrey8>
+              <Input>
+                <UserIcon src="/assets/icon-right.svg" />
+                <UserName>cmioeiechjwidojwo</UserName>
+                <EditIcon src="/assets/edit.svg"></EditIcon>
+              </Input>
+            </To>
+          </TransferBetween>
+          <Amount>
+            <Label>
+              <TextGrey10>Select amount</TextGrey10>
+              <TextGrey7>Available 
+                <span 
+                  style={{ fontWeight: '700' }}
+                > 2 ATOM</span>
+              </TextGrey7>
+            </Label>
+            <AmountInput>
+              <UserIconAmount 
+                src="/assets/icon-left.svg" 
+              />
+              <TextNormal8 
+                style={{ flex: 1, marginLeft: '8px'}}
+              >
+                2
+              </TextNormal8>
+              <TextNormal8 
+                style={{ padding: '0 5px' }}
+              >ATOM</TextNormal8>
+              <TextGrey6>≈ $1,013</TextGrey6>
+            </AmountInput>
+            <AmountSelect>
+              {amountOption.map((item, index) => (
+                <Option>{item}</Option>
+              ))}
+            </AmountSelect>
+          </Amount>
+          <EstimatedTime>
+            <ClockIcon src={ mode === 'lightMode' ? '/assets/clock-black.svg' : '/assets/clock.svg' }></ClockIcon>
+            <TextNormal8
+              style={{ marginLeft: '4px', fontWeight: '300'}}
+            >Estimated time: 
+              <span
+                style={{ fontWeight: '500'}}
+              > 20 seconds</span>
+            </TextNormal8>
+          </EstimatedTime>
+          <TransferButton>Transfer</TransferButton>
+          <CancelButton>Cancel</CancelButton>
+        </DepositContainer>
+      </ThemeProvider>
+    );
+  }
+
+  ReactDOM.render(<DepositComponent />, document.getElementById('root'));
+</script>
+
+</html>
